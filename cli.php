@@ -1,6 +1,6 @@
+<?php
 #!/usr/local/bin/php
 
-<?php
 /**
  *
  * My WP CLI Toolset
