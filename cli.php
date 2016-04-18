@@ -32,6 +32,7 @@
 		'php' => './partials/', 
 		'scss' => './assets/src/scss/', 
 		'js' => './assets/src/js/', 
+		'templates' => './.cli-templates/', 
 		);
 
 
@@ -104,12 +105,13 @@
 		
 		$scss_file = $app_paths['scss'] . $partial_type . 's/_' . $partial_type . '-' . $partial_name . '.scss';
 		$file = create_file($scss_file);
-
-		$contents = file_get_contents('./cli-templates/template.scss');
-		$contents = str_replace("%%partial_name%%", $partial_name, $contents);
-		$contents = str_replace("%%partial_type%%", $partial_type, $contents);
-		fwrite($file, $contents);
-		fclose($file);
+		if($file != ""){	
+			$contents = file_get_contents( $app_paths['templates'] .'template.scss');
+			$contents = str_replace("%%partial_name%%", $partial_name, $contents);
+			$contents = str_replace("%%partial_type%%", $partial_type, $contents);
+			fwrite($file, $contents);
+			fclose($file);
+		}
 
 		print "SCSS: " . $scss_file . "\n";
 	}
@@ -125,11 +127,13 @@
 		$php_file = $app_paths['php'] . $partial_type . 's/' . $partial_type . '-' . $partial_name . '.php';
 		$file = create_file($php_file);
 
-		$contents = file_get_contents('./cli-templates/template.php');
+		if($file != ""){	
+		$contents = file_get_contents( $app_paths['templates'] .'template.php');
 		$contents = str_replace("%%partial_name%%", $partial_name, $contents);
 		$contents = str_replace("%%partial_type%%", $partial_type, $contents);
 		fwrite($file, $contents);
 		fclose($file);
+		}
 		
 		$usage = 'get_template_part("partials/'.$partial_type.'s/'.$partial_type.'", "' . $partial_name . '");';
 		print "PHP: " . $php_file . ' | Usage = ' . $usage . "\n";
@@ -145,11 +149,13 @@
 		$js_file = $app_paths['js'] . '/' . $partial_type . '-' . $partial_name . '.js';
 		$file = create_file($js_file);
 
-		$contents = file_get_contents('./cli-templates/template.js');
+		if($file != ""){
+		$contents = file_get_contents( $app_paths['templates'] .'template.js');
 		$contents = str_replace("%%partial_name%%", $partial_name, $contents);
 		$contents = str_replace("%%partial_type%%", $partial_type, $contents);
 		fwrite($file, $contents);
 		fclose($file);
+		}
 
 		print "JS: " . $js_file . "\n";
 	}
