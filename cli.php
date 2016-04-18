@@ -8,7 +8,9 @@
  * 
  * php cli.php <partial_type> <partial_name> <options = --js/--scss/--php>
  * 
- * Create files:
+ * NOTE : A folder must be created beforehand for the partial_type
+ * 
+ * Creates files:
  * 	- SCSS
  *  - partial PHP file 
  *  - JS file
@@ -27,13 +29,11 @@
 	 */
 
 	$app_paths = array(
-		'php' => './test/', 
-		'scss' => './test/', 
-		'js' => './test/', 
-		// 'php' => './partials/', 
-		// 'scss' => './assets/src/scss/', 
-		// 'js' => './assets/src/js/', 
+		'php' => './partials/', 
+		'scss' => './assets/src/scss/', 
+		'js' => './assets/src/js/', 
 		);
+
 
 	/**
 	 *
@@ -71,7 +71,6 @@
 			} else {
 				mkdir($app_path, '744');
 			}
-
 		}
 	}
 
@@ -85,6 +84,12 @@
 	 	if( file_exists ( $filename ) ) {
 	 		//
 	 	} else {
+
+	 		$dirname = dirname($filename);
+	 		if (!is_dir($dirname))
+	 		{
+	 			mkdir($dirname, 0755, true);
+	 		}
 			return fopen($filename, "w");
 	 	}
 	 }
@@ -98,9 +103,9 @@
 	function create_scss_file($partial_type, $partial_name, $app_paths){
 		
 		$scss_file = $app_paths['scss'] . $partial_type . 's/_' . $partial_type . '-' . $partial_name . '.scss';
-		
 		$file = create_file($scss_file);
-		$contents = file_get_contents('./cli-template/template.scss');
+
+		$contents = file_get_contents('./cli-templates/template.scss');
 		$contents = str_replace("%%partial_name%%", $partial_name, $contents);
 		$contents = str_replace("%%partial_type%%", $partial_type, $contents);
 		fwrite($file, $contents);
@@ -120,7 +125,7 @@
 		$php_file = $app_paths['php'] . $partial_type . 's/' . $partial_type . '-' . $partial_name . '.php';
 		$file = create_file($php_file);
 
-		$contents = file_get_contents('./cli-template/template.php');
+		$contents = file_get_contents('./cli-templates/template.php');
 		$contents = str_replace("%%partial_name%%", $partial_name, $contents);
 		$contents = str_replace("%%partial_type%%", $partial_type, $contents);
 		fwrite($file, $contents);
@@ -128,7 +133,6 @@
 		
 		$usage = 'get_template_part("partials/'.$partial_type.'s/'.$partial_type.'", "' . $partial_name . '");';
 		print "PHP: " . $php_file . ' | Usage = ' . $usage . "\n";
-
 	}
 
 	/**
@@ -138,10 +142,10 @@
 	 */
 
 	function create_js_file($partial_type, $partial_name, $app_paths){
-		$js_file = $app_paths['js'] . "components/" . 's/' . $partial_type . '-' . $partial_name . '.js';
-		create_file($js_file);
+		$js_file = $app_paths['js'] . '/' . $partial_type . '-' . $partial_name . '.js';
+		$file = create_file($js_file);
 
-		$contents = file_get_contents('./cli-template/template.js');
+		$contents = file_get_contents('./cli-templates/template.js');
 		$contents = str_replace("%%partial_name%%", $partial_name, $contents);
 		$contents = str_replace("%%partial_type%%", $partial_type, $contents);
 		fwrite($file, $contents);
@@ -223,15 +227,5 @@
 	}
 
 /*=====  End of CLI Option ROUTES  ======*/
-
-/**
- *
- * Status Message
- *
- */
-
-
-// var_dump($files_created);
-// print implode(", \n", $files_created);
 
 ?>
