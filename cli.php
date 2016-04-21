@@ -40,7 +40,7 @@ if( php_sapi_name() == 'cli'):
 			'php' => './partials/', 
 			'scss' => './assets/src/scss/', 
 			'js' => './assets/src/js/', 
-			'templates' => './.cli-templates/', 
+			'templates' => './.front-end-cli/templates/', 
 			);
 
 	/*=====  End of SETUP VARS  ======*/
