@@ -145,7 +145,7 @@ if( php_sapi_name() == 'cli'):
 				fwrite($file, $contents);
 				fclose($file);
 			}
-			$usage = '@import "' . $partial_type . 's/' . $partial_type . '/' . $partial_name . '";';
+			$usage = '@import "' . $partial_type . 's/' . $partial_type . '-' . $partial_name . '";';
 			// print "SCSS: " . $scss_file . ' | ' . $usage . "\n";
 			print $usage . "\n";
 		}
