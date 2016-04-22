@@ -206,7 +206,7 @@ if( php_sapi_name() == 'cli'):
 	=========================================*/
 		
 
-		if( isset($options) ):
+		if( isset($options) && isset($partial_name) && isset($partial_name) ):
 
 			/**
 			 *
@@ -283,7 +283,7 @@ if( php_sapi_name() == 'cli'):
 
 			}
 
-		else:
+		elseif(isset($partial_name) && isset($partial_name)):
 
 			/**
 			 *
